@@ -15,8 +15,11 @@ type Node struct {
 }
 
 type BinaryTree struct {
-	root *Node
+	root           *Node
+	nodeToRootPath NodeToRootPath
 }
+
+type NodeToRootPath []*Node
 
 func (bt *BinaryTree) insert(data int) {
 	node := &Node{data: data}
@@ -112,4 +115,40 @@ func calculateHeight(root *Node) int {
 	lhs := calculateHeight(root.left)
 	rhs := calculateHeight(root.right)
 	return max(lhs, rhs) + 1
+}
+
+func (bt *BinaryTree) calculateNodeToRootPath(root *Node, data int) bool {
+	if root == nil {
+		return false
+	}
+	if root.data == data {
+		bt.nodeToRootPath = append(bt.nodeToRootPath, root)
+		return true
+	}
+	lhs := bt.calculateNodeToRootPath(root.left, data)
+	rhs := bt.calculateNodeToRootPath(root.right, data)
+	if lhs {
+		bt.nodeToRootPath = append(bt.nodeToRootPath, root)
+		return true
+	} else if rhs {
+		bt.nodeToRootPath = append(bt.nodeToRootPath, root)
+		return true
+	}
+	return false
+}
+
+func main() {
+	bt := &BinaryTree{}
+	bt.insert(5)
+	bt.insert(3)
+	bt.insert(7)
+	bt.insert(2)
+	bt.insert(4)
+	// preOrder(bt.root)
+	// inOrder(bt.root)
+	// fmt.Println(calculateHeight(bt.root))
+	bt.calculateNodeToRootPath(bt.root, 4)
+	for _, v := range bt.nodeToRootPath {
+		fmt.Println(v.data)
+	}
 }
