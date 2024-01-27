@@ -27,6 +27,43 @@ func (g *Graph) printGraph() {
 	}
 }
 
+func (g *Graph) bfs(startVertex int) {
+	visited := make(map[int]bool)
+	queue := []int{startVertex}
+	for len(queue) > 0 {
+		vertex := queue[0]
+		queue = queue[1:]
+		if !visited[vertex] {
+			fmt.Print(vertex, " ")
+			visited[vertex] = true
+			for _, neighbor := range g.adjacencyList[vertex] {
+				if !visited[neighbor] {
+					queue = append(queue, neighbor)
+				}
+			}
+		}
+	}
+
+}
+
+func (g *Graph) dfs(startVertex int) {
+	visited := make(map[int]bool)
+	g.dfsRecursive(startVertex, visited)
+}
+
+func (g *Graph) dfsRecursive(vertex int, visited map[int]bool) {
+	if !visited[vertex] {
+		fmt.Print(vertex, " ")
+		visited[vertex] = true
+
+		for _, neighbor := range g.adjacencyList[vertex] {
+			if !visited[neighbor] {
+				g.dfsRecursive(neighbor, visited)
+			}
+		}
+	}
+}
+
 func main() {
 	g := newGraph()
 	g.addEdge(1, 2)
@@ -35,4 +72,7 @@ func main() {
 	g.addEdge(3, 4)
 
 	g.printGraph()
+	fmt.Println("==========DFS=========")
+	// g.bfs(1)
+	g.dfs(1)
 }
