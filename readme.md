@@ -2,12 +2,12 @@
 
 - Recursion
 - Dynamic Programming (DP)
-- Stacks
-- Queues
-- Heaps
-- HashMaps
-- Linked Lists
-- Trees
-- Graphs
+- Stacks # ok
+- Queues # ok
+- Heaps # 
+- HashMaps # ok
+- Linked Lists # done
+- Trees #
+- Graphs #
 
 

@@ -9,9 +9,9 @@ import "fmt"
 // 2   4
 
 type Node struct {
-	data  int
-	left  *Node
-	right *Node
+	Data  int
+	Left  *Node
+	Right *Node
 }
 
 type BinaryTree struct {
@@ -21,73 +21,73 @@ type BinaryTree struct {
 
 type NodeToRootPath []*Node
 
-func (bt *BinaryTree) insert(data int) {
-	node := &Node{data: data}
+func (bt *BinaryTree) Insert(data int) {
+	node := &Node{Data: data}
 	if bt.root == nil {
 		bt.root = node
 	} else {
-		insertNode(bt.root, node)
+		InsertNode(bt.root, node)
 	}
 }
 
-func insertNode(root *Node, node *Node) {
-	if node.data <= root.data {
-		if root.left == nil {
-			root.left = node
+func InsertNode(root *Node, node *Node) {
+	if node.Data <= root.Data {
+		if root.Left == nil {
+			root.Left = node
 		} else {
-			insertNode(root.left, node)
+			InsertNode(root.Left, node)
 		}
 	} else {
-		if root.right == nil {
-			root.right = node
+		if root.Right == nil {
+			root.Right = node
 		} else {
-			insertNode(root.right, node)
+			InsertNode(root.Right, node)
 		}
 	}
 }
 
-func preOrder(node *Node) {
+func PreOrder(node *Node) {
 	if node == nil {
 		return
 	}
-	fmt.Println(node.data)
-	preOrder(node.left)
-	preOrder(node.right)
+	fmt.Println(node.Data)
+	PreOrder(node.Left)
+	PreOrder(node.Right)
 }
 
-func inOrder(node *Node) {
+func InOrder(node *Node) {
 	if node != nil {
-		inOrder(node.left)
-		fmt.Println(node.data)
-		inOrder(node.right)
+		InOrder(node.Left)
+		fmt.Println(node.Data)
+		InOrder(node.Right)
 	}
 }
 
-func calculateSize(root *Node) int {
+func CalculateSize(root *Node) int {
 	if root == nil {
 		return 0
 	}
-	lhs := calculateSize(root.left)
-	rhs := calculateSize(root.right)
+	lhs := CalculateSize(root.Left)
+	rhs := CalculateSize(root.Right)
 	return lhs + rhs + 1
 }
 
-func calculateSum(root *Node) int {
+func CalculateSum(root *Node) int {
 	if root == nil {
 		return 0
 	}
-	lhs := calculateSum(root.left)
-	rhs := calculateSum(root.right)
-	return lhs + rhs + root.data
+	lhs := CalculateSum(root.Left)
+	rhs := CalculateSum(root.Right)
+	return lhs + rhs + root.Data
 }
 
-func calculateMax(root *Node) int {
+func CalculateMax(root *Node) int {
 	if root == nil {
 		return 0
 	}
-	max := root.data
-	lhs := calculateMax(root.left)
-	rhs := calculateMax(root.right)
+	max := root.Data
+	lhs := CalculateMax(root.Left)
+	rhs := CalculateMax(root.Right)
 	var candidate int
 	if lhs > max {
 		candidate = lhs
@@ -101,32 +101,32 @@ func calculateMax(root *Node) int {
 	}
 }
 
-func max(a, b int) int {
+func Max(a, b int) int {
 	if a > b {
 		return a
 	}
 	return b
 }
 
-func calculateHeight(root *Node) int {
+func CalculateHeight(root *Node) int {
 	if root == nil {
 		return 0
 	}
-	lhs := calculateHeight(root.left)
-	rhs := calculateHeight(root.right)
-	return max(lhs, rhs) + 1
+	lhs := CalculateHeight(root.Left)
+	rhs := CalculateHeight(root.Right)
+	return Max(lhs, rhs) + 1
 }
 
-func (bt *BinaryTree) calculateNodeToRootPath(root *Node, data int) bool {
+func (bt *BinaryTree) CalculateNodeToRootPath(root *Node, data int) bool {
 	if root == nil {
 		return false
 	}
-	if root.data == data {
+	if root.Data == data {
 		bt.nodeToRootPath = append(bt.nodeToRootPath, root)
 		return true
 	}
-	lhs := bt.calculateNodeToRootPath(root.left, data)
-	rhs := bt.calculateNodeToRootPath(root.right, data)
+	lhs := bt.CalculateNodeToRootPath(root.Left, data)
+	rhs := bt.CalculateNodeToRootPath(root.Right, data)
 	if lhs {
 		bt.nodeToRootPath = append(bt.nodeToRootPath, root)
 		return true
@@ -137,18 +137,18 @@ func (bt *BinaryTree) calculateNodeToRootPath(root *Node, data int) bool {
 	return false
 }
 
-func main() {
-	bt := &BinaryTree{}
-	bt.insert(5)
-	bt.insert(3)
-	bt.insert(7)
-	bt.insert(2)
-	bt.insert(4)
-	// preOrder(bt.root)
-	// inOrder(bt.root)
-	// fmt.Println(calculateHeight(bt.root))
-	bt.calculateNodeToRootPath(bt.root, 4)
-	for _, v := range bt.nodeToRootPath {
-		fmt.Println(v.data)
-	}
-}
+// func main() {
+// 	bt := &BinaryTree{}
+// 	bt.Insert(5)
+// 	bt.Insert(3)
+// 	bt.Insert(7)
+// 	bt.Insert(2)
+// 	bt.Insert(4)
+// 	// preOrder(bt.root)
+// 	// inOrder(bt.root)
+// 	// fmt.Println(calculateHeight(bt.root))
+// 	bt.CalculateNodeToRootPath(bt.root, 4)
+// 	for _, v := range bt.nodeToRootPath {
+// 		fmt.Println(v.Data)
+// 	}
+// }
